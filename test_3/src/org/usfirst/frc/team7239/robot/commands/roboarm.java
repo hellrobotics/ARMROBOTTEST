@@ -30,6 +30,10 @@ public class roboarm extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	ssArm.MoveSpin(oi.stick.getZ() ,oi.stick.getRawAxis(3));
+    	ssArm.MoveAngle1(oi.stick2.getRawAxis(4));
+    	ssArm.Claw(oi.stick.getRawButton(1));
+    	
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -46,3 +50,4 @@ public class roboarm extends Command {
     protected void interrupted() {
     }
 }
+
