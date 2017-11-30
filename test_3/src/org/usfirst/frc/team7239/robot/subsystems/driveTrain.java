@@ -9,6 +9,10 @@ import org.usfirst.frc.team7239.robot.*;
  *
  */
 public class driveTrain extends Subsystem {
+	
+	double limitFactor = 0.5;
+	double slowFactor = 0.2;
+	
 	VictorSP left1 = new VictorSP(RobotMap.LEFTMOTOR1);
 	VictorSP left2 = new VictorSP(RobotMap.LEFTMOTOR2);
 	VictorSP right1 = new VictorSP(RobotMap.RIGHTMOTOR1);
@@ -36,8 +40,19 @@ public class driveTrain extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
-	public void Arcade(double moveValue, double rotateValue) {
-		Drive.arcadeDrive(moveValue, rotateValue * -1, true);
+	public void Arcade(double moveValue, double rotateValue, boolean boost, boolean slow) {
+		double move = moveValue;
+		double turn = rotateValue;
+		
+		if(!boost) {
+			move = moveValue * limitFactor;
+			turn = rotateValue * limitFactor;
+		} else if (slow) {
+			move = moveValue * slowFactor;
+			turn = rotateValue * slowFactor;
+		}
+		
+		Drive.arcadeDrive(move, turn * -1, true);
 		
 	}
 }
