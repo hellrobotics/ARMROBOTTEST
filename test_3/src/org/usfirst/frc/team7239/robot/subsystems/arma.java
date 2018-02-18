@@ -1,5 +1,8 @@
 package org.usfirst.frc.team7239.robot.subsystems;
 import edu.wpi.first.wpilibj.SensorBase;
+import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.SpeedController;
+
 import org.usfirst.frc.team7239.robot.RobotMap;
 import org.usfirst.frc.team7239.robot.commands.roboarm;
 
@@ -17,7 +20,8 @@ public class arma extends Subsystem {
 	
 	VictorSP spin = new VictorSP(RobotMap.MEATSPIN);
 	VictorSP angle1 = new VictorSP(RobotMap.ANGLE1);
-	VictorSP angle2 = new VictorSP(RobotMap.ANGLE2);
+	//VictorSP angle2 = new VictorSP(RobotMap.ANGLE2);
+	Spark angle2 = new Spark(RobotMap.ANGLE2);
 	Encoder spinCoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 	Encoder arm1Coder = new Encoder(2, 3, false, Encoder.EncodingType.k4X);
 	DigitalOutput clawPort = new DigitalOutput(RobotMap.CLAW);
@@ -43,7 +47,7 @@ public class arma extends Subsystem {
     
     public void MoveSpin(double movePos, double moveNeg) {
     	double moveValue = movePos - moveNeg;
-    	spin.setSpeed(moveValue*-1);
+    	spin.setSpeed(moveValue);
     	int count = spinCoder.get();
     	System.out.println("SpinCoder Count = " + count);
     }
@@ -54,9 +58,9 @@ public class arma extends Subsystem {
     
     public void SnopDispensser(boolean on, boolean no) {
     	if(on) {
-    		angle2.setSpeed(-0.5);
+    		angle2.setSpeed(-1);
     	} else if(no) {
-    		angle2.setSpeed(0.5);
+    		angle2.setSpeed(1);
     	} else {
     		angle2.setSpeed(0);
     	}

@@ -47,7 +47,7 @@ public class Robot extends IterativeRobot {
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 		
-		/*
+		//x/*
 		visionThread = new Thread(() -> {
 			// Get the UsbCamera from CameraServer
 			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
@@ -83,7 +83,7 @@ public class Robot extends IterativeRobot {
 		});
 		visionThread.setDaemon(true);
 		visionThread.start();
-		*/
+		//*/
 	}
 	
 
@@ -128,7 +128,7 @@ public class Robot extends IterativeRobot {
 		}
 		arcadeDrive.start();
 		roboarm.start();
-		System.out.println("STARTER TELEOP");
+		//System.out.println("STARTER TELEOP");
 	}
 
 

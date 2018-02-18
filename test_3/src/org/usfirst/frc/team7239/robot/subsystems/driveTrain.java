@@ -40,18 +40,18 @@ public class driveTrain extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
-	public void Arcade(double moveValue, double rotateValue, boolean boost, boolean slow) {
-		double move = moveValue;
-		double turn = rotateValue + 0.05;
+	public void Arcade(double moveValue, double rotateValue, double maxSpeed) {
+		double move = moveValue * maxSpeed;
+		double turn = rotateValue * maxSpeed;
 		
-		if(!boost) {
+		/*if(!boost) {
 			move = moveValue * limitFactor;
 			turn = rotateValue * limitFactor;
 		}
 		if (slow) {
 			move = moveValue * slowFactor;
 			turn = rotateValue * slowFactor;
-		}
+		}*/
 		
 		Drive.arcadeDrive(move, turn * -1, true);
 		
