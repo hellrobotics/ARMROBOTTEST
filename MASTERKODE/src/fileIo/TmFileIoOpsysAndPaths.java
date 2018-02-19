@@ -10,7 +10,7 @@ public class TmFileIoOpsysAndPaths {
 	
 	//used to list specific Tm744 directories used to group files
 	public static enum TmSubdirsE {
-		TRAJ_SUBDIR_NAME("trajectories"),
+		TRAJ_SUBDIR_NAME("Trajectories"),
 		DRIVE_TUNING_LOG_SUBDIR("driveTuning"),
 		ARM_TUNING("armTuning")
 		;
@@ -75,7 +75,7 @@ public class TmFileIoOpsysAndPaths {
 		static final String T744_FILES_ROOT_WINDOWS = ".\\src\\t744utils\\fileIo";
 		//when running on RoboRIO, assume Tm744 files are in the directory designated
 		//in FRC documentation
-		static final String T744_FILES_ROOT_ROBORIO = "/home/lvuser/tm744";
+		static final String T744_FILES_ROOT_ROBORIO = "/home/lvuser";
 
 		String t744FilesRootPath = T744_FILES_ROOT_ROBORIO; //default??
 		

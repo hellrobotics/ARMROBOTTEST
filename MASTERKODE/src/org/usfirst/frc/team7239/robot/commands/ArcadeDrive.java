@@ -24,6 +24,7 @@ public class ArcadeDrive extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	ssTrain.setEncoderZero();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -42,9 +43,13 @@ public class ArcadeDrive extends Command {
     			 running = false;
     		 }
     	} else if(oi.stick.getRawButton(12)) {
-    		ssTrain.setVelocity(0.2, 0.2);;
+    		ssTrain.setVelocity(0.5, 0.5);;
     	} else {
     		ssTrain.Arcade(oi.stick.getY(), oi.stick.getX(), oi.stick.getRawAxis(3));
+    	}
+    	
+    	if(oi.stick.getRawButton(10)) {
+    		ssTrain.setEncoderZero();
     	}
     	
     	

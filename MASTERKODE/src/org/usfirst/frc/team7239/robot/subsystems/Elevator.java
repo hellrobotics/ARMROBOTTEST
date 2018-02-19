@@ -21,7 +21,7 @@ public class Elevator extends Subsystem {
     DigitalInput limSwitch2 = new DigitalInput(RobotMap.LIMITSWITCHBOT);
     
     
-    int sensorTopVal = 101010101; //45284.0 43116.0
+    int sensorTopVal = 45000; //45284.0 43116.0
     
 	private static Elevator m_instance;
 	public static synchronized Elevator getInstance() {
@@ -39,6 +39,9 @@ public class Elevator extends Subsystem {
     
     public boolean getBotSwitch() {
     	return limSwitch2.get();
+    }
+    public boolean getTopSwitch() {
+    	return limSwitch1.get();
     }
     
     public void move (double speed) {

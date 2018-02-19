@@ -18,11 +18,14 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
+import org.usfirst.frc.team7239.robot.commandgroup.AutoTestScale;
+import org.usfirst.frc.team7239.robot.commandgroup.TestCmdG;
 import org.usfirst.frc.team7239.robot.commands.ArcadeDrive;
 import org.usfirst.frc.team7239.robot.commands.AutonomTest;
 import org.usfirst.frc.team7239.robot.commands.ElevatorControl;
 import org.usfirst.frc.team7239.robot.commands.ExampleCommand;
 import org.usfirst.frc.team7239.robot.commands.GrabController;
+import org.usfirst.frc.team7239.robot.commands.TmACmdFollowTrajectory;
 import org.usfirst.frc.team7239.robot.subsystems.ExampleSubsystem;
 
 
@@ -38,7 +41,6 @@ public class Robot extends IterativeRobot {
 	SendableChooser<Command> chooser = new SendableChooser<>();
 	Command arcadeDrive = new ArcadeDrive();
 	Command elevatorControl = new ElevatorControl();
-	Command autonomTest = new AutonomTest();
 	Command gControl = new GrabController();
 	Thread visionThread;
 	
@@ -48,47 +50,13 @@ public class Robot extends IterativeRobot {
 		
 		oi = new OI();
 		chooser.addDefault("Default Auto", new ExampleCommand());
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", chooser);
+		chooser.addObject("Test Auto", new TmACmdFollowTrajectory("traj.csv",'t','t',true));
+		chooser.addObject("Test Turn", new TmACmdFollowTrajectory("trajturn.csv",'t','t',true));
+		chooser.addObject("Test 3+2m", new TestCmdG());
+		chooser.addObject("Test Scale", new AutoTestScale());
+		SmartDashboard.putData("Auto selector", chooser);
 		
-		/*
-		visionThread = new Thread(() -> {
-			// Get the UsbCamera from CameraServer
-			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-			// Set the resolution
-			camera.setResolution(640, 480);
-
-			// Get a CvSink. This will capture Mats from the camera
-			CvSink cvSink = CameraServer.getInstance().getVideo();
-			// Setup a CvSource. This will send images back to the Dashboard
-			CvSource outputStream = CameraServer.getInstance().putVideo("Rectangle", 640, 480);
-
-			// Mats are very memory expensive. Lets reuse this Mat.
-			Mat mat = new Mat();
-
-			// This cannot be 'true'. The program will never exit if it is. This
-			// lets the robot stop this thread when restarting robot code or
-			// deploying.
-			while (!Thread.interrupted()) {
-				// Tell the CvSink to grab a frame from the camera and put it
-				// in the source mat.  If there is an error notify the output.
-				if (cvSink.grabFrame(mat) == 0) {
-					// Send the output the error.
-					outputStream.notifyError(cvSink.getError());
-					// skip the rest of the current iteration
-					continue;
-				}
-				// Put a rectangle on the image
-				Imgproc.rectangle(mat, new Point(100, 100), new Point(400, 400),
-						new Scalar(255, 255, 255), 5);
-				
-				// Give the output stream a new image to display
-				outputStream.putFrame(mat);
-			}
-		});
-		visionThread.setDaemon(true);
-		visionThread.start();
-		*/
+		
 	}
 	
 
@@ -107,18 +75,6 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		autonomousCommand = chooser.getSelected();
 
-		
-		String autoSelected = SmartDashboard.getString("Auto Selector","Default"); 
-		switch(autoSelected) 
-		{ 
-		case "Test": 
-			autonomousCommand = autonomTest; 
-		break; 
-		case "Default Auto": default: 
-			autonomousCommand = new ExampleCommand(); 
-		break; 
-		}
-		autonomTest.start();
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
@@ -154,6 +110,5 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testPeriodic() {
 		LiveWindow.run();
-		autonomTest.start();
 	}
 }

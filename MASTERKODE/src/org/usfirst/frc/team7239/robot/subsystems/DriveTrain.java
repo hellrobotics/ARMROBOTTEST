@@ -26,11 +26,11 @@ public class DriveTrain extends Subsystem {
 	double mP1S = 1;
 	double degP1S = 45;
 	
-	public static double diam = 0.1524; //m
+	public static double diam = 0.15188; //m
 	public static double circ = diam*Math.PI; //m
 	public static double talonUnitToMPS = (10.0/4096.0)*circ; // 
 	public static double talonUnitToM = circ/4096.0;
-	public static final double DRV_POS_P_GAIN = 0;
+	public static final double DRV_POS_P_GAIN = (0.5845*1.75)/100.0;
 	
 	WPI_TalonSRX left1 = new WPI_TalonSRX(RobotMap.LEFTMOTOR1);
 	WPI_TalonSRX left2 = new WPI_TalonSRX(RobotMap.LEFTMOTOR2);
@@ -60,6 +60,8 @@ public class DriveTrain extends Subsystem {
 		left1.setSensorPhase(true);
 		right2.config_kF(0, 0.39346, 0);
 		left1.config_kF(0, 0.42625, 0);
+		right2.config_kP(0, 0.5845*1.75, 0);
+		left1.config_kP(0, 0.5845*1.75, 0);
 		
 	}
 	
@@ -88,6 +90,11 @@ public class DriveTrain extends Subsystem {
 		right1.setSelectedSensorPosition(0, 0, 0);
 	}
 	
+	public void setEncoderZero () {
+		right2.setSelectedSensorPosition(0, 0, 0);
+		left1.setSelectedSensorPosition(0, 0, 0);
+	}
+	
 	public void AutoMove (double meterFWD, double degR) {
 		System.out.println("Kjorer frem " + meterFWD + " meter og svinger " + degR + " grader.");
 		Drive.arcadeDrive(-0.5, 0);
@@ -113,6 +120,11 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("positionLRaw", left1.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("positionR-meter", right2.getSelectedSensorPosition(0)*talonUnitToM);
 		SmartDashboard.putNumber("positionL-meter", left1.getSelectedSensorPosition(0)*talonUnitToM);
+		
+		SmartDashboard.putNumber("RightRawSpeed", right2.getSelectedSensorVelocity(0));
+    	SmartDashboard.putNumber("LeftRawSpeed", left1.getSelectedSensorVelocity(0));
+    	SmartDashboard.putNumber("RightSpeed", right2.getSelectedSensorVelocity(0)*talonUnitToMPS);
+    	SmartDashboard.putNumber("LeftSpeed", left1.getSelectedSensorVelocity(0)*talonUnitToMPS);
 		
 	}
 	

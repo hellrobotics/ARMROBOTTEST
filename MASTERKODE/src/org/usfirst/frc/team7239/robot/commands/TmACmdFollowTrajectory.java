@@ -94,16 +94,19 @@ public class TmACmdFollowTrajectory extends Command {
         if(gameData.length() > 0) {
         	if(gameData.charAt(0) != switchSide && 
         		(switchSide == 'L' || switchSide == 'R')) {
+        		System.out.println("Switchside != gamedata");
 				runAuto = false;
         	} //else runAuto
         	
         	if(gameData.charAt(1) != scaleSide && 
-        		(switchSide == 'L' || switchSide == 'R')) {
+        		(scaleSide == 'L' || scaleSide == 'R')) {
 				runAuto = false;
+				System.out.println("Scaleside != gamedata");
         	} //else runAuto        	
 		}
         else { //don't run auto is no gameData available
         	runAuto = false;
+        	System.out.println("No gamedata");
         }
         
         //initialize things
