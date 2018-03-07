@@ -4,6 +4,7 @@ import org.usfirst.frc.team7239.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -15,8 +16,10 @@ public class Grabber extends Subsystem {
 	Spark rGrab = new Spark(RobotMap.RIGHTGRABBER);
 	Spark lGrab = new Spark(RobotMap.LEFTGRABBER);
 	
-	DoubleSolenoid pneuGrab = new DoubleSolenoid(0,1);
-
+	//DoubleSolenoid pneuGrab = new DoubleSolenoid(0,1);
+	Solenoid pneuGrab1 = new Solenoid(0);
+	Solenoid pneuGrab2 = new Solenoid(1);
+	
 	private static Grabber m_instance;
 	public static synchronized Grabber getInstance() {
 		if (m_instance == null){
@@ -36,9 +39,11 @@ public class Grabber extends Subsystem {
     	lGrab.set(speed);
     	
     	if(Elevator.getInstance().getBotSwitch() == true || speed != 0) {
-    		pneuGrab.set(DoubleSolenoid.Value.kForward);
+    		pneuGrab1.set(false);
+    		pneuGrab2.set(false);
     	} else {
-    		pneuGrab.set(DoubleSolenoid.Value.kReverse);
+    		pneuGrab1.set(true);
+    		pneuGrab2.set(true);
     	}
     }
     

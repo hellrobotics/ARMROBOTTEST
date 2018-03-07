@@ -18,6 +18,8 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
+import org.usfirst.frc.team7239.robot.commandgroup.AutoLeftScale;
+import org.usfirst.frc.team7239.robot.commandgroup.AutoMidSwitch;
 import org.usfirst.frc.team7239.robot.commandgroup.AutoTestScale;
 import org.usfirst.frc.team7239.robot.commandgroup.TestCmdG;
 import org.usfirst.frc.team7239.robot.commands.ArcadeDrive;
@@ -50,10 +52,15 @@ public class Robot extends IterativeRobot {
 		
 		oi = new OI();
 		chooser.addDefault("Default Auto", new ExampleCommand());
+		chooser.addObject("Auto Mid Switch", new AutoMidSwitch());
+		chooser.addObject("Auto Left Scale", new AutoLeftScale());
+		chooser.addObject("Auto Tmp Test", new TmACmdFollowTrajectory("LeftLScale2.csv",'t','t',true));
+		/*
 		chooser.addObject("Test Auto", new TmACmdFollowTrajectory("traj.csv",'t','t',true));
 		chooser.addObject("Test Turn", new TmACmdFollowTrajectory("trajturn.csv",'t','t',true));
 		chooser.addObject("Test 3+2m", new TestCmdG());
 		chooser.addObject("Test Scale", new AutoTestScale());
+		*/
 		SmartDashboard.putData("Auto selector", chooser);
 		
 		
