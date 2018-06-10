@@ -32,7 +32,8 @@ public class ArcadeDrive extends Command {
     boolean running = false;
     protected void execute() {
     	
-    	
+    	ssTrain.Arcade(oi.stick.getY(), oi.stick.getX(), oi.stick.getRawAxis(3));
+    	/*
     	if(oi.stick.getRawButtonPressed(11)) {
     		timeStamp =Timer.getFPGATimestamp();
     		running = true;
@@ -45,12 +46,12 @@ public class ArcadeDrive extends Command {
     	} else if(oi.stick.getRawButton(12)) {
     		ssTrain.setVelocity(0.5, 0.5);;
     	} else {
-    		ssTrain.Arcade(oi.stick.getY(), oi.stick.getX(), oi.stick.getRawAxis(3));
+    		
     	}
     	
     	if(oi.stick.getRawButton(10)) {
     		ssTrain.setEncoderZero();
-    	}
+    	}*/
     	
     	
     }

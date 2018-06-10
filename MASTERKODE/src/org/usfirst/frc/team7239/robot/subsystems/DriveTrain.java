@@ -81,6 +81,9 @@ public class DriveTrain extends Subsystem {
     	SmartDashboard.putNumber("RightSpeed", right2.getSelectedSensorVelocity(0)*talonUnitToMPS);
     	SmartDashboard.putNumber("LeftSpeed", left1.getSelectedSensorVelocity(0)*talonUnitToMPS);
 	}
+	public void Arcade (double moveValue, double rotateValue) {
+		Arcade(moveValue, rotateValue, 1);
+	}
 	
 	public int getElevatorPos () {
 		return right1.getSelectedSensorPosition(0);

@@ -29,11 +29,11 @@ public class roboarm extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	ssArm.MoveSpin(oi.stick.getZ() ,oi.stick.getRawAxis(3));
-    	ssArm.MoveAngle1(oi.stick2.getRawAxis(5));
-    	ssArm.SnopDispensser(oi.stick.getRawButton(1), oi.stick.getRawButton(2));
-    	ssArm.SetZero(oi.stick.getRawButton(4));
-    	ssArm.ReturnToZero(oi.stick.getRawButton(3));
+    	//ssArm.MoveSpin(oi.stick.getZ() ,oi.stick.getRawAxis(3));
+    	ssArm.MoveAngle1(oi.stick2.getRawAxis(3));
+    	//ssArm.SnopDispensser(oi.stick.getRawButton(1), oi.stick.getRawButton(2));
+    	//ssArm.SetZero(oi.stick.getRawButton(4));
+    	//ssArm.ReturnToZero(oi.stick.getRawButton(3));
     }
 
     // Make this return true when this Command no longer needs to run execute()

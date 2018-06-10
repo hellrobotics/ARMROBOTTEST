@@ -20,6 +20,8 @@ public class Grabber extends Subsystem {
 	Solenoid pneuGrab1 = new Solenoid(0);
 	Solenoid pneuGrab2 = new Solenoid(1);
 	
+	//private DigitalInput qbSwitch = new DigitalInput(RobotMap.LIMITSWITCHCUBE);
+	
 	private static Grabber m_instance;
 	public static synchronized Grabber getInstance() {
 		if (m_instance == null){
@@ -37,6 +39,8 @@ public class Grabber extends Subsystem {
     public void move (double speed) {
     	rGrab.set(speed);
     	lGrab.set(speed);
+    	
+    	//System.out.println(qbSwitch.get());
     	
     	if(Elevator.getInstance().getBotSwitch() == true || speed != 0) {
     		pneuGrab1.set(false);

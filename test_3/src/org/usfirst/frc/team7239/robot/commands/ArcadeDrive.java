@@ -26,7 +26,7 @@ public class ArcadeDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	ssTrain.Arcade(oi.stick.getY(), oi.stick.getX(), oi.stick.getRawAxis(3));
+    	ssTrain.Arcade(oi.stick.getY()*-1, oi.stick.getZ(), 0.6);
     }
 
     // Make this return true when this Command no longer needs to run execute()

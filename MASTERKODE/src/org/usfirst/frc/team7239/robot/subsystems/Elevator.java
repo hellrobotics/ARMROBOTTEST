@@ -50,11 +50,11 @@ public class Elevator extends Subsystem {
     	SmartDashboard.putBoolean("BotLim", limSwitch2.get());
     	int elpos = DriveTrain.getInstance().getElevatorPos();
     	SmartDashboard.putNumber("HeisPos", elpos);
-    	if(limSwitch1.get() == true && speed > 0) {
+    	/*if(limSwitch1.get() == true && speed > 0) {
     		elevatorMotor.set(0);
     		sensorTopVal = DriveTrain.getInstance().getElevatorPos();
     		SmartDashboard.putNumber("HeisMax", sensorTopVal);
-    	} else if(limSwitch2.get() == true && speed < 0) {
+    	} else*/ if(limSwitch2.get() == true && speed < 0) {
     		elevatorMotor.set(0);
     		DriveTrain.getInstance().setElevatorZero();
     	} else {

@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team7239.robot.*;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 /**
  *
  */
@@ -13,10 +15,10 @@ public class driveTrain extends Subsystem {
 	double limitFactor = 0.5;
 	double slowFactor = 0.35;
 	
-	VictorSP left1 = new VictorSP(RobotMap.LEFTMOTOR1);
-	VictorSP left2 = new VictorSP(RobotMap.LEFTMOTOR2);
-	VictorSP right1 = new VictorSP(RobotMap.RIGHTMOTOR1);
-	VictorSP right2 = new VictorSP(RobotMap.RIGHTMOTOR2);
+	WPI_TalonSRX left1 = new WPI_TalonSRX(RobotMap.LEFTMOTOR1);
+	WPI_TalonSRX left2 = new WPI_TalonSRX(RobotMap.LEFTMOTOR2);
+	WPI_TalonSRX right1 = new WPI_TalonSRX(RobotMap.RIGHTMOTOR1);
+	WPI_TalonSRX right2 = new WPI_TalonSRX(RobotMap.RIGHTMOTOR2);
 	RobotDrive Drive = new RobotDrive(left1, left2, right1, right2);
 	
 	

@@ -21,8 +21,9 @@ public class RobotMap {
 	public static final int LEFTMOTOR2 = 4;
 	
 	//DIO
-	public static final int LIMITSWITCHTOP = 1;
+	public static final int LIMITSWITCHTOP = 2;
 	public static final int LIMITSWITCHBOT = 0;
+	public static final int LIMITSWITCHCUBE = 5;
 	
 	
 	

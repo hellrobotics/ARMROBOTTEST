@@ -21,6 +21,7 @@ public class AutoElevator extends Command {
     	tolerance = Tolerance;
     }
 
+    
     // Called just before this Command runs the first time
     protected void initialize() {
     	ssElevator.autoMove(pos, tolerance);

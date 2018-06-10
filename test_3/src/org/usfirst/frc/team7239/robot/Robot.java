@@ -14,8 +14,16 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.awt.geom.RectangularShape;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
+import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team7239.robot.commands.ArcadeDrive;
@@ -57,7 +65,7 @@ public class Robot extends IterativeRobot {
 			// Get a CvSink. This will capture Mats from the camera
 			CvSink cvSink = CameraServer.getInstance().getVideo();
 			// Setup a CvSource. This will send images back to the Dashboard
-			CvSource outputStream = CameraServer.getInstance().putVideo("Rectangle", 640, 480);
+			CvSource outputStream = CameraServer.getInstance().putVideo("CubeVision", 640, 480);
 
 			// Mats are very memory expensive. Lets reuse this Mat.
 			Mat mat = new Mat();
@@ -74,11 +82,44 @@ public class Robot extends IterativeRobot {
 					// skip the rest of the current iteration
 					continue;
 				}
-				// Put a rectangle on the image
-				Imgproc.rectangle(mat, new Point(100, 100), new Point(400, 400),
-						new Scalar(255, 255, 255), 5);
+				Mat filterOut = new Mat();
+				Core.inRange(mat, new Scalar(0,240,0), new Scalar(255,255,255), filterOut);
+				mat.release();
+				//filterOut.convertTo(filterOut, CvType.CV_32SC1);
+				final List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+				contours.clear();
+				Mat hierarchy = new Mat();
+				//Imgproc.cvtColor(filterOut, filterOut, Imgproc.COLOR_RGB2GRAY, 1);
+				//Imgproc.threshold(filterOut, filterOut, 50, 250, Imgproc.ADAPTIVE_THRESH_MEAN_C);
+				Imgproc.findContours(filterOut, contours, hierarchy, Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
+				hierarchy.release();
+				System.out.println("Objekter: " + contours.size());
+				if(contours.size() != 0) {
+					MatOfPoint biggestContour = contours.get(0);
+				
+					for(int i = 0; i < contours.size(); i++) {
+						final MatOfPoint contour = contours.get(i);
+						double area = Imgproc.contourArea(contour);
+						double biggestArea = Imgproc.contourArea(biggestContour);
+						if (area > biggestArea) {
+							biggestContour = contour;
+						}
+						//contour.release();
+						//contours.get(i).release();
+					}
+				
+					System.out.println("Storste objektomrade: " + Imgproc.contourArea(biggestContour));
+					Imgproc.cvtColor(filterOut, filterOut, Imgproc.COLOR_GRAY2RGB, 3);
+					if (Imgproc.contourArea(biggestContour) > 20.0) {
+						final Rect bb = Imgproc.boundingRect(biggestContour);
+						// Put a rectangle on the image
+						Imgproc.rectangle(filterOut, new Point(bb.x ,bb.y), new Point(bb.x + bb.width, bb.y + bb.height),new Scalar(0, 0, 255), 5);
+					} 
+				}
 				// Give the output stream a new image to display
-				outputStream.putFrame(mat);
+				outputStream.putFrame(filterOut);
+				//outputStream.putFrame(mat);
+				filterOut.release();
 			}
 		});
 		visionThread.setDaemon(true);

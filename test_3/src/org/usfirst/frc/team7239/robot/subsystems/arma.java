@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import org.usfirst.frc.team7239.robot.RobotMap;
 import org.usfirst.frc.team7239.robot.commands.roboarm;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -16,7 +17,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class arma extends Subsystem {
 	
-	double armLimiter = 0.35;
+	double armLimiter = 1;
 	
 	VictorSP spin = new VictorSP(RobotMap.MEATSPIN);
 	VictorSP angle1 = new VictorSP(RobotMap.ANGLE1);
@@ -25,6 +26,7 @@ public class arma extends Subsystem {
 	Encoder spinCoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 	Encoder arm1Coder = new Encoder(2, 3, false, Encoder.EncodingType.k4X);
 	DigitalOutput clawPort = new DigitalOutput(RobotMap.CLAW);
+	DigitalInput limSwitch = new DigitalInput(RobotMap.LIMIT);
 	
 	
 	private static arma m_instance;
@@ -41,7 +43,12 @@ public class arma extends Subsystem {
     }
     
     public void MoveAngle1(double moveValue) {
-    	angle1.setSpeed(moveValue*armLimiter*-1);
+    	System.out.println(limSwitch.get());
+    	if (limSwitch.get() == false && moveValue > 0) {
+    		angle2.setSpeed(0);
+    	} else {
+    		angle2.setSpeed(moveValue*armLimiter*-1);
+    	}
     	
     }
     

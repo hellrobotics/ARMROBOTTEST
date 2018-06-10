@@ -30,7 +30,7 @@ public class ElevatorControl extends Command {
     	if(oi.stick.getPOV() == 0) {
     		ssElevator.move(1*oi.stick.getRawAxis(3));
     	} else if (oi.stick.getPOV() == 180) {
-    		ssElevator.move(-.5*oi.stick.getRawAxis(3));
+    		ssElevator.move(-0.7*oi.stick.getRawAxis(3));
     	} else {
     		ssElevator.move(0);
     	}
